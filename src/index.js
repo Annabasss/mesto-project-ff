@@ -42,14 +42,14 @@ function handleOpenImageModal (cardData) {
     openModal (cardModal)
 }
 
-function profileFormSubmit (evt) {
+function handleProfileFormSubmit (evt) {
     evt.preventDefault();
     profileTitle.textContent = profileEditFormNameInput.value;
     profileDescription.textContent = profileEditFormDescriptionInput.value;
     closeModal (profileEditModal)
 }
 
-function newCardFormSubmit(evt) {
+function handleNewCardFormSubmit(evt) {
     evt.preventDefault();
     const newCard = {
         name: newCardFormNameInput.value,
@@ -95,5 +95,5 @@ modalCloseButtons.forEach(button => {
  });
 })
 
-profileEditForm.addEventListener('submit', profileFormSubmit);
-newCardForm.addEventListener('submit', newCardFormSubmit)
+profileEditForm.addEventListener('submit', handleProfileFormSubmit);
+newCardForm.addEventListener('submit', handleNewCardFormSubmit)
