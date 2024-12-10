@@ -68,10 +68,10 @@ export const getUserInfo = () => {
         .then(checkResponse);
   } 
 
-  export const deleteCard = (cardId) => {
-    return fetch(`${config.baseUrl}/cards/${cardId}`, {
-      method: 'DELETE',  
-      headers: config.headers,
+  export const deleteCard = (id) => {
+    return fetch(`${config.baseUrl}/cards/${id}`, {
+        method: 'DELETE',
+        headers: config.headers,
   })
   .then(checkResponse);
   } 

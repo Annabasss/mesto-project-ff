@@ -1,7 +1,7 @@
 import {deleteCard, likeCard} from './api';
 
 
-function createCard(cardData, template, deleteCard, modalOpenCard, likeFunction, userId) {
+function createCard(cardData, template, modalOpenCard, likeFunction, userId) {
     const copyTemplateElement = template.querySelector('.card').cloneNode(true);
 
     const cardImage = copyTemplateElement.querySelector('.card__image');
@@ -22,14 +22,14 @@ function createCard(cardData, template, deleteCard, modalOpenCard, likeFunction,
         deleteButton.style.display = 'none'
     }
     else {
-        deleteButton.addEventListener('click', function() {
+        deleteButton.addEventListener('click', () => {
             deleteCard(cardData._id)
             .then(() => {
-                removeCard(copyTemplateElement);
+                copyTemplateElement.remove();
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.error('Ошибка удаления карточки:', err));
     });
-    }
+}
 
     cardImage.addEventListener('click', () => {
         modalOpenCard(cardData)
@@ -44,16 +44,6 @@ function createCard(cardData, template, deleteCard, modalOpenCard, likeFunction,
     return copyTemplateElement;
 }
 
-function removeCard(cardElement, id) {
-    deleteCard(id).then(data => {
-        cardElement.remove();
-    })
-    .catch((err) => {
-        console.log(err);
-    });
-
-};
-
 function likeButtonFunction(button, id, countElement) {
     const isLiked = button.classList.contains('card__like-button_is-active');
 
@@ -67,4 +57,4 @@ function likeButtonFunction(button, id, countElement) {
 
 }
 
-export {createCard, removeCard, likeButtonFunction}
+export {createCard, likeButtonFunction}

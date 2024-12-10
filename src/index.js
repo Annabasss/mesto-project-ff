@@ -87,14 +87,9 @@ function handleNewCardFormSubmit(evt) {
 
     addNewCard(newCardFormNameInput.value, newCardFormLinkInput.value)
     .then(newCardData => {
-        const newCard = {
-            name: newCardData.name ,
-            link: newCardData.link
-        }
         const createdCard = createCard(
             newCardData, 
             template,
-            removeCard,
             handleOpenImageModal,
             likeButtonFunction,
             myId
@@ -103,6 +98,9 @@ function handleNewCardFormSubmit(evt) {
             newCardForm.reset();
             closeModal(profileAddModal)
     })
+    .catch(err => {
+        console.error('Ошибка добавления новой карточки:', err);
+    });
 };
   
 function handleAvatarFormSubmit () {
@@ -110,9 +108,12 @@ function handleAvatarFormSubmit () {
         profileImage.style.backgroundImage = `url(${userData.avatar})`;
         closeModal(avatarModal);
         avatarForm.reset();
-
     })
-}
+    .catch(err => {
+        console.error('Ошибка добавления новой карточки:', err);
+    });
+};
+
 
 Promise.all([getUserInfo(), getInitialCards()]).then(([userData, cards]) => {
     profileTitle.textContent = userData.name;
@@ -121,11 +122,15 @@ Promise.all([getUserInfo(), getInitialCards()]).then(([userData, cards]) => {
     myId = userData._id;
     cards.forEach(function(card) {
         const createdCard = createCard(card, 
-        template, removeCard, handleOpenImageModal, likeButtonFunction, myId);
+        template, handleOpenImageModal, likeButtonFunction, myId);
         cardsContainer.append(createdCard);
+        
 });
-})
 
+})
+    .catch(err => {
+    console.error('Ошибка загрузки данных пользователя или карточек:', err);
+});
 
 modals.forEach(modal => {
     modal.classList.add('popup_is-animated')
